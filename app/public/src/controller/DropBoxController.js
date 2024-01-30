@@ -6,10 +6,16 @@ class DropBoxController {
       this.progressBarEl = this.snackModalEl.querySelector('.mc-progress-bar-fg')
       this.nameFileEl = this.snackModalEl.querySelector('.filename')
       this.timeleftEl = this.snackModalEl.querySelector('.timeleft')
-  
+
+      this.connectFirebase();
+
       this.initEvents();
     }
+
+    
+}
   
+
     initEvents() {
       this.btnSendFileEl.addEventListener("click", (event) => {
         this.inputFilesEl.click();
