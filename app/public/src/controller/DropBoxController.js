@@ -8,6 +8,8 @@ class DropBoxController {
       this.timeleftEl = this.snackModalEl.querySelector('.timeleft')
   
       this.connectFirebase = function() {
+
+        
         const firebaseConfig = {
             apiKey: "AIzaSyAMrL4E9_0MkzaJLV68CXpzY7_eB0pe92Q",
             authDomain: "dropbox-clone-a934f.firebaseapp.com",
@@ -19,15 +21,15 @@ class DropBoxController {
             measurementId: "G-K74KSRPN5Y"
           };
           
-            import { initializeApp } from "firebase/app";
-            import { getAnalytics } from "firebase/analytics";
             
+
           // Initialize Firebase
           const app = initializeApp(firebaseConfig);
           const analytics = getAnalytics(app);
 
 
       };
+
       this.initEvents();
     }
   
@@ -41,7 +43,17 @@ class DropBoxController {
       });
   
       this.inputFilesEl.addEventListener("change", (event) => {
-        this.uploadTask(event.target.files);
+        this.uploadTask(event.target.files).then(responses => {
+
+            responses.forEach(resp => {
+
+                console.log(resp.files['input-file']);
+
+            });
+
+            this.modalShow(false);
+
+        });
   
         this.modalShow();
   
@@ -65,8 +77,6 @@ class DropBoxController {
   
           ajax.onload = event => {
   
-            this.modalShow(false)
-  
             try {
               resolve(JSON.parse(ajax.responseText))
             } catch (e) {
@@ -75,7 +85,7 @@ class DropBoxController {
           }
   
           ajax.onerror = event => {
-            this.modalShow(false)
+
             reject(event)
           }
   
