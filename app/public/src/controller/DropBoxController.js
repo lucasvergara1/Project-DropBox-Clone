@@ -49,6 +49,8 @@ class DropBoxController {
 
                 console.log(resp.files['input-file']);
 
+                this.getFirebaseRef().push().set(resp.files['input-file']);
+
             });
 
             this.modalShow(false);
@@ -61,6 +63,14 @@ class DropBoxController {
   
       });
     }
+
+
+    getFirebaseRef(){
+
+        return firebase.database().ref('files');
+
+    }
+
   
     modalShow(show = true) {
       this.snackModalEl.style.display = (show) ? "block" : "none"
